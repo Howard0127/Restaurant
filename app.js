@@ -33,7 +33,10 @@ app.get('/search', (req, res) => {
 
   let filteredRestaurant = []
   for (restaurant of restaurantList.results) {
-    if (keywordArr.find(word => restaurant.name.includes(word) || restaurant.category.includes(word)))
+    const restaurantName = restaurant.name.toLowerCase()
+    const restaurantCategory = restaurant.category.toLowerCase()
+
+    if (keywordArr.find(word => restaurantName.includes(word) || restaurantCategory.includes(word)))
     filteredRestaurant.push(restaurant)
   }
 
