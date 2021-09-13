@@ -22,7 +22,9 @@ app.get('/', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurantList.results.find(item => item.id.toString() === id)
+  const restaurant = restaurantList.results.find(
+    (item) => item.id.toString() === id
+  )
   res.render('show', { restaurant })
 })
 
@@ -36,13 +38,14 @@ app.get('/search', (req, res) => {
     const restaurantName = restaurant.name.toLowerCase()
     const restaurantCategory = restaurant.category.toLowerCase()
 
-    if (keywordArr.find(word => restaurantName.includes(word) || restaurantCategory.includes(word)))
-    filteredRestaurant.push(restaurant)
+    if (
+      keywordArr.find(
+        (word) =>
+          restaurantName.includes(word) || restaurantCategory.includes(word)
+      )
+    )
+      filteredRestaurant.push(restaurant)
   }
-
-  // const filteredRestaurant = restaurantList.results.filter(item => {
-  //   return item.name.toLowerCase().includes(keywordLow) || item.category.toLowerCase().includes(keywordLow)
-  // })
 
   res.render('index', { restaurants: filteredRestaurant, keyword })
 })
