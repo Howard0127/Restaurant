@@ -8,7 +8,7 @@ const restaurantSchema = new Schema({
   },
   name_en: {
     type: String,
-    require: false
+    require: true
   },
   category: {
     type: String,

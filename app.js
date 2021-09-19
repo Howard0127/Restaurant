@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 const port = 3000
-const restaurantList = require('./restaurant.json')
+const Restaurant = require('./models/restaurant')
 
 // setting mongodb connection
 mongoose.connect('mongodb://localhost/restaurant-list')
@@ -22,16 +22,18 @@ db.once('open', () => {
 const exphbs = require('express-handlebars')
 
 // setting template engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 // setting static files
 app.use(express.static('public'))
 
 // routes setting
 app.get('/', (req, res) => {
-  const restaurants = restaurantList.results
-  res.render('index', { restaurants })
+  Restaurant.find()
+  .lean()
+  .then(restaurants => res.render('index', { restaurants }))
+  .catch(error => console.error(error))
 })
 
 app.get('/restaurants/:id', (req, res) => {
@@ -44,24 +46,25 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
-  const keywordLow = keyword.toLowerCase()
-  const keywordArr = keywordLow.split(' ')
+  const keywordArr = keyword.toLowerCase().split(' ')
+  
+  Restaurant.find()
+    .lean()
+    .then(restaurants => {
+      let filteredRestaurant = []
+      for (restaurant of restaurants) {
+        const name = restaurant.name.toLowerCase()
+        const category = restaurant.category.toLowerCase()
+        if (keywordArr.find((word) => 
+          name.includes(word) || category.includes(word)
+        )) {
+          filteredRestaurant.push(restaurant)
+        }         
+      }
 
-  let filteredRestaurant = []
-  for (restaurant of restaurantList.results) {
-    const restaurantName = restaurant.name.toLowerCase()
-    const restaurantCategory = restaurant.category.toLowerCase()
-
-    if (
-      keywordArr.find(
-        (word) =>
-          restaurantName.includes(word) || restaurantCategory.includes(word)
-      )
-    )
-      filteredRestaurant.push(restaurant)
-  }
-
-  res.render('index', { restaurants: filteredRestaurant, keyword })
+      res.render('index', { restaurants: filteredRestaurant, keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 // start and listen on the Express server
