@@ -18,7 +18,7 @@
     </div>
   </div>
 </div>
-
+  
 {{#if restaurants}}
 <!-- restaurant list -->
 <div class="container mt-5">
@@ -27,7 +27,7 @@
       <div class="card-columns">
 
         {{#each restaurants}}
-        <a href="/restaurants/{{this.id}}" class="text-secondary">
+        <a href="/restaurants/{{ this._id }}" class="text-secondary">
           <div class="card mb-3">
             <img class="card-img-top" src="{{this.image}}"
               alt="{{this.name}}">
@@ -55,8 +55,6 @@
                   </form>
                 </div>
               </div>
-              
-
             </div>
           </div>
         </a>
