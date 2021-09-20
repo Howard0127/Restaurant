@@ -1,6 +1,7 @@
 // require packages used in the project
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 const Restaurant = require('./models/restaurant')
@@ -28,12 +29,25 @@ app.set('view engine', 'hbs')
 // setting static files
 app.use(express.static('public'))
 
+// setting body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // routes setting
 app.get('/', (req, res) => {
   Restaurant.find()
   .lean()
   .then(restaurants => res.render('index', { restaurants }))
   .catch(error => console.error(error))
+})
+
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  return Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 app.get('/restaurants/:id', (req, res) => {
