@@ -33,6 +33,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
+// route 到首頁
 app.get('/', (req, res) => {
   Restaurant.find()
   .lean()
@@ -40,16 +41,41 @@ app.get('/', (req, res) => {
   .catch(error => console.error(error))
 })
 
+//route 到新增頁
 app.get('/restaurants/new', (req, res) => {
   res.render('new')
 })
 
+//route 新增餐廳存檔後回首頁
 app.post('/restaurants', (req, res) => {
   return Restaurant.create(req.body)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
+//route 編輯某餐廳頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then((restaurant) => {
+      for (const [key, value] of Object.entries(req.body)) {
+        restaurant[key] = value
+      }
+      return restaurant.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+//route 查看某餐廳頁面
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -58,6 +84,16 @@ app.get('/restaurants/:id', (req, res) => {
    .catch(error => console.log(error))
 })
 
+//route 刪除某餐廳後重新渲染首頁
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+//route 到搜尋結果頁面
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   const keywordArr = keyword.toLowerCase().split(' ')
@@ -80,6 +116,7 @@ app.get('/search', (req, res) => {
     })
     .catch(error => console.log(error))
 })
+
 
 // start and listen on the Express server
 app.listen(port, () => {
