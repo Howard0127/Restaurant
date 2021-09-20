@@ -52,10 +52,10 @@ app.post('/restaurants', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurantList.results.find(
-    (item) => item.id.toString() === id
-  )
-  res.render('show', { restaurant })
+  return Restaurant.findById(id)
+   .lean()
+   .then(restaurant => res.render('show', { restaurant }))
+   .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
