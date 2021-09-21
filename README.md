@@ -5,16 +5,18 @@
 ## Features
 
 - [x] User can view all the restaurant info. cards at the home page
-- [x] User can get more details about the restaurant by clicking the card
+- [x] User can crate a new restaurant card
+- [x] User can get more details about a restaurant
+- [x] User can edit information about a restaurant
+- [x] User can delete a restaurant
 - [x] User can search name or category of restaurants with keywords
 
 ## Environment
 
-- VS Code
-- git
 - Node.js
-- Express.js
-- Express-Handlebars
+- npm
+- mongoDB & mongoose
+- nodemon
 
 ## Installation Instruction
 
@@ -34,8 +36,13 @@
   npm install
   ```
 
+  ```
+  npm run seed (import seed data)
+  ```
+
 - Run the project
   ```
   run npm dev
   ```
+- Terminal shows "Express is listening on localhost: 3000" when it is connected
 - Paste http://localhost:3000/ on a browser

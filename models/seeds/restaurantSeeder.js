@@ -27,5 +27,5 @@ db.once('open', () => {
     })
   })
 
-  console.log('done.')
+  console.log('Done. Ctrl + C to exit.')
 })
