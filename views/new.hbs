@@ -3,7 +3,7 @@
     <div class="row mb-1">
       <div class="form-group col">
         <label for="name"><i class="fas fa-utensils mr-1"></i>餐廳名稱</label>
-        <input type="text" class="form-control" name="name"  id="name" placeholder="請輸入餐廳中文名稱">
+        <input type="text" class="form-control" name="name"  id="name" placeholder="請輸入餐廳中文名稱" required>
       </div>
       <div class="form-group col">
         <label for="name_en"><i class="fas fa-language mr-1"></i>英文名稱</label>
@@ -13,7 +13,7 @@
     <div class="row mb-2">
       <div class="form-group col-4">
         <label for="category"><i class="fas fa-sort mr-1"></i>類別</label>
-        <input list="categories" class="form-control" name="category" id="category" placeholder="點選選項或輸入餐廳類別">
+        <input list="categories" class="form-control" name="category" id="category" placeholder="點選選項或輸入餐廳類別" required>
         <datalist id="categories">
           <option>日本料理</option>
           <option>中東料理</option>
@@ -26,27 +26,27 @@
         </datalist>
       </div>
       <div class="form-group col-4">
-        <label for="rating"><i class="fas fa-heart mr-1"></i>請給分</label>
+        <label for="rating"><i class="fas fa-heart mr-1" required></i>請給分</label>
         <input type="number" class="form-control" name="rating" id="rating" min="0" max="5" step="0.1" placeholder="輸入評分 0 到 5.0" value="4">
       </div>
       <div class="form-group col-4">
-        <label for="phone"><i class="fas fa-phone-square-alt mr-1"></i>電話</label>
+        <label for="phone"><i class="fas fa-phone-square-alt mr-1" required></i>電話</label>
         <input type="tel" class="form-control" name="phone" id="phone" placeholder="請輸入店家電話號碼">
       </div>
     </div>
     <div class="row mb-2">
       <div class="form-group col">
-        <label for="location"><i class="fas fa-home mr-1"></i>地址</label>
+        <label for="location"><i class="fas fa-home mr-1" required></i>地址</label>
         <input type="text" class="form-control" name="location" id="location" placeholder="清輸入餐廳地址">
       </div>
       <div class="form-group col">
-        <label for="google_map"><i class="fas fa-map-marked-alt mr-1"></i>Google地圖</label>
+        <label for="google_map"><i class="fas fa-map-marked-alt mr-1" required></i>Google地圖</label>
         <input type="url" class="form-control" name="google_map" id="google_map" placeholder="請貼上google地圖網址 https://goo.gl/maps/...">
       </div>
     </div>
     <div class="row mb-2">
       <div class="form-group col-4">
-        <label for="image"><i class="fas fa-camera-retro mr-1"></i>圖片</label>
+        <label for="image"><i class="fas fa-camera-retro mr-1" required></i>圖片</label>
         <input type="url" class="form-control" name="image" id="image" placeholder="請附上餐廳圖片網址">
       </div>
       <div class="form-group col-8">

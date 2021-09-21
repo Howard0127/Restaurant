@@ -105,8 +105,9 @@ app.get('/search', (req, res) => {
       for (restaurant of restaurants) {
         const name = restaurant.name.toLowerCase()
         const category = restaurant.category.toLowerCase()
+        const location = restaurant.location.toLowerCase()
         if (keywordArr.find((word) => 
-          name.includes(word) || category.includes(word)
+          name.includes(word) || category.includes(word) || location.includes(word)
         )) {
           filteredRestaurant.push(restaurant)
         }         
