@@ -20,10 +20,11 @@
 
 ## Installation Instruction
 
-- Clone the project by pasting URL in the terminal
+- Clone the project by pasting URL in the terminal or [download here](https://github.com/Howard0127/Restaurant/archive/refs/heads/main.zip)
+
 
   ```
-  git clone https://github.com/howard0127/restaurant.git
+  git clone https://github.com/howard0127/restaurant.git 
   ```
 
 - Install the package
