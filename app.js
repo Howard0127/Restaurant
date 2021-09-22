@@ -2,6 +2,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 const Restaurant = require('./models/restaurant')
@@ -31,6 +32,9 @@ app.use(express.static('public'))
 
 // setting body-parser
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// setting mehtod-override
+app.use(methodOverride('_method'))
 
 // routes setting
 // route 到首頁
@@ -62,7 +66,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then((restaurant) => {
@@ -85,7 +89,7 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 //route 刪除某餐廳後重新渲染首頁
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())

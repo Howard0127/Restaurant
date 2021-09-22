@@ -1,5 +1,5 @@
 <div class="container new-restaurant mt-4">
-  <form action="/restaurants/{{ restaurant._id }}/edit" method="POST">
+  <form action="/restaurants/{{ restaurant._id }}?_method=PUT" method="POST">
     <div class="row mb-1">
       <div class="form-group col">
         <label for="name"><i class="fas fa-utensils mr-1" required></i>餐廳名稱</label>
