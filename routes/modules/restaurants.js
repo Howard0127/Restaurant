@@ -27,18 +27,23 @@ router.get('/search', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => {
-      const filteredRestaurant = []
-      for (restaurant of restaurants) {
+      let filteredRestaurant = []
+      filteredRestaurant = restaurants.filter(restaurant => {
         const name = restaurant.name.toLowerCase()
         const category = restaurant.category.toLowerCase()
         const location = restaurant.location.toLowerCase()
-        if (keywordArr.find((word) =>
-          name.includes(word) || category.includes(word) || location.includes(word)
-        )) {
-          filteredRestaurant.push(restaurant)
-        }
-      }
-
+        return keywordArr.some(word => name.includes(word) || category.includes(word) || location.includes(word))
+      })
+      // for (restaurant of restaurants) {
+      //   const name = restaurant.name.toLowerCase()
+      //   const category = restaurant.category.toLowerCase()
+      //   const location = restaurant.location.toLowerCase()
+      //   if (keywordArr.find((word) =>
+      //     name.includes(word) || category.includes(word) || location.includes(word)
+      //   )) {
+      //     filteredRestaurant.push(restaurant)
+      //   }
+      // }
       res.render('index', { restaurants: filteredRestaurant, keyword })
     })
     .catch(error => console.log(error))
