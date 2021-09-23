@@ -20,6 +20,10 @@ router.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   const keywordArr = keyword.toLowerCase().split(' ')
   
+  if (keyword.length === 0) {
+    res.redirect('/')
+  }
+
   Restaurant.find()
     .lean()
     .then(restaurants => {
