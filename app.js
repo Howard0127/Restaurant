@@ -26,5 +26,5 @@ app.use(routes)
 
 // start and listen on the Express server
 app.listen(3000, () => {
-  console.log(`Express is listening on localhost: 3000.`)
+  console.log('Express is listening on localhost: 3000.')
 })

@@ -5,10 +5,10 @@ const Restaurant = require('../../models/restaurant')
 // route 到首頁
 router.get('/', (req, res) => {
   Restaurant.find()
-  .lean()
-  .sort({ _id: 'asc' })
-  .then(restaurants => res.render('index', { restaurants }))
-  .catch(error => console.error(error))
+    .lean()
+    .sort({ _id: 'asc' })
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
 })
 
 module.exports = router
