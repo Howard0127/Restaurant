@@ -34,6 +34,8 @@ router.get('/search', (req, res) => {
         const location = restaurant.location.toLowerCase()
         return keywordArr.some(word => name.includes(word) || category.includes(word) || location.includes(word))
       })
+      // 優化前的程式碼
+      // const filteredRestaurant = []
       // for (restaurant of restaurants) {
       //   const name = restaurant.name.toLowerCase()
       //   const category = restaurant.category.toLowerCase()
