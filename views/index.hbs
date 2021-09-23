@@ -1,23 +1,47 @@
 <!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-12 mx-auto">
+    
+      <div class="container search-bar">
+        <div class="search-bar-outer d-flex justify-content-between">
+
+          <div class="search-bar-inner">
+            <form action="/restaurants/search">
+              {{!-- <h4 class="mb-2">尋找餐廳：</h4> --}}
+              <div class="input-group">
+                <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
+                  aria-label="Restaurant Name..." value="" aria-describedby="search-button">
+                <div class="input-group-append">
+                  <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </form>
           </div>
+
+          <div class="dropup">
+            <button class="btn btn-major dropdown-toggle" type="button" id="sortingButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              餐廳排序
+            </button>
+            <div class="dropdown-menu" aria-labelledby="sortingButton">
+              <a class="dropdown-item" href="/">紀錄順序 舊>新 (預設)</a>
+              <a class="dropdown-item" href="/restaurants/new-old">紀錄順序 新>舊</a>
+              <a class="dropdown-item" href="/restaurants/rating">餐廳評分 高>低</a>
+              <a class="dropdown-item" href="/restaurants/category">餐廳類別</a>
+            </div>
+          </div>
+
         </div>
-      </form>
-      <form action="/restaurants/new">
-        <button type="summit" class="btn btn-outline-secondary mt-3 btn-sm btn-block"><i class="fas fa-plus-square mr-2"></i>加入新餐廳</button>
-      </form>
+      </div>
+
     </div>
   </div>
 </div>
+
+
+
+
   
 {{#if restaurants}}
 <!-- restaurant list -->

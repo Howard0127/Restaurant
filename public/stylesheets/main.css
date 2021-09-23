@@ -2,11 +2,13 @@ header {
   overflow: hidden;
 }
 
-.navbar .navbar-brand {
+.navbar .navbar-brand,
+.create-btn {
   color: #4592af;
 }
 
-.navbar .navbar-brand:hover {
+.navbar .navbar-brand:hover,
+.create-btn:hover {
   color: #226089;
 }
 
@@ -23,12 +25,12 @@ header {
 
 .search-bar .search-bar-outer {
   margin: 0 auto;
-  max-width: 680px;
+  max-width: 100%;
   background-color: #fce2cf;
   border-radius: 8px;
   padding: 20px 30px;
   border: 0;
-  margin-top: -60px;
+  margin-top: -40px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -49,6 +51,15 @@ header {
 .form-control:focus {
   box-shadow: none;
   border-color: #ced4da;
+}
+
+.dropup .dropdown-menu {
+  background-color: #fce2cf;
+  opacity: 0.9;
+}
+
+.dropup .dropdown-item {
+  color: gray;
 }
 
 .card {
