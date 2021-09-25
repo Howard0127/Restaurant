@@ -8,35 +8,35 @@ const restaurantSchema = new Schema({
   },
   name_en: {
     type: String,
-    require: false
+    required: false
   },
   category: {
     type: String,
-    require: true
+    required: true
   },
   image: {
     type: String,
-    require: true
+    required: true
   },
   location: {
     type: String,
-    require: true
+    required: false
   },
   phone: {
     type: String,
-    require: true
+    required: false
   },
   google_map: {
     type: String,
-    require: true
+    required: false
   },
   rating: {
     type: Number,
-    require: true
+    required: true
   },
   description: {
     type: String,
-    require: true
+    required: false
   }
 })
 

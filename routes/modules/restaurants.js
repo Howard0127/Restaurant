@@ -51,31 +51,6 @@ router.get('/search', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// sorting routes
-router.get('/new-old', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .sort({ _id: 'desc' })
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
-})
-
-router.get('/rating', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .sort({ rating: 'desc' })
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
-})
-
-router.get('/category', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .sort({ category: 'asc' })
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
-})
-
 // route 編輯某餐廳頁面
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
