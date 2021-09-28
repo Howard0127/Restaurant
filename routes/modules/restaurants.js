@@ -18,35 +18,21 @@ router.post('/', (req, res) => {
 // route 到搜尋結果頁面
 router.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
-  const keywordArr = keyword.toLowerCase().split(' ')
-
+  const keywords = keyword.toLowerCase().split(' ')
+  
   if (keyword.length === 0) {
     res.redirect('/')
   }
 
-  Restaurant.find()
+  const keywordsRegExp = new RegExp(keywords.join("|"), 'gi')
+  Restaurant.find({$or: [
+    {name: {$in: keywordsRegExp}}, 
+    {location: {$in: keywordsRegExp}}, 
+    {category: {$in: keywordsRegExp}}
+    ]})
     .lean()
     .then(restaurants => {
-      let filteredRestaurant = []
-      filteredRestaurant = restaurants.filter(restaurant => {
-        const name = restaurant.name.toLowerCase()
-        const category = restaurant.category.toLowerCase()
-        const location = restaurant.location.toLowerCase()
-        return keywordArr.some(word => name.includes(word) || category.includes(word) || location.includes(word))
-      })
-      // 優化前的程式碼
-      // const filteredRestaurant = []
-      // for (restaurant of restaurants) {
-      //   const name = restaurant.name.toLowerCase()
-      //   const category = restaurant.category.toLowerCase()
-      //   const location = restaurant.location.toLowerCase()
-      //   if (keywordArr.find((word) =>
-      //     name.includes(word) || category.includes(word) || location.includes(word)
-      //   )) {
-      //     filteredRestaurant.push(restaurant)
-      //   }
-      // }
-      res.render('index', { restaurants: filteredRestaurant, keyword })
+      res.render('index', { restaurants, keyword })
     })
     .catch(error => console.log(error))
 })
@@ -62,13 +48,14 @@ router.get('/:id/edit', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
-    .then((restaurant) => {
-      for (const [key, value] of Object.entries(req.body)) {
-        restaurant[key] = value
-      }
-      return restaurant.save()
-    })
+  return Restaurant.findByIdAndUpdate(id, {$set: req.body})
+
+    // .then((restaurant) => {
+    //   for (const [key, value] of Object.entries(req.body)) {
+    //     restaurant[key] = value
+    //   }
+    //   return restaurant.save()
+    // })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -85,8 +72,7 @@ router.get('/:id', (req, res) => {
 // route 刪除某餐廳後重新渲染首頁
 router.delete('/:id', (req, res) => {
   const id = req.params.id
-  return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
+  return Restaurant.findByIdAndDelete(id)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
