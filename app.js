@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 const routes = require('./routes')
 const app = express()
@@ -28,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // setting mehtod-override
 app.use(methodOverride('_method'))
+
+// 呼叫 Passport 函式並傳入 app
+usePassport(app)
 
 // routes setting
 app.use(routes)
