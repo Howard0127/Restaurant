@@ -5,11 +5,15 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const usePassport = require('./config/passport')
 require('./config/mongoose')
 const routes = require('./routes')
 const app = express()
+const PORT = process.env.PORT
 
 // setting template engine
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
@@ -17,7 +21,7 @@ app.set('view engine', 'hbs')
 
 // setting session
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -50,6 +54,6 @@ app.use((req, res, next) => {
 app.use(routes)
 
 // start and listen on the Express server
-app.listen(3000, () => {
-  console.log('Express is listening on localhost: 3000.')
+app.listen(PORT, () => {
+  console.log(`Express is listening on localhost: ${PORT}.`)
 })
