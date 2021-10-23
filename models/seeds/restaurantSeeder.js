@@ -8,43 +8,35 @@ const Restaurant = require('../restaurant')
 const restaurantData = require('./restaurant.json').results
 const db = require('../../config/mongoose')
 
-const SEED_USERS = [
-  {
-    name: 'SEED_USER_1',
-    email: 'user1@example.com',
-    password: '12345678',
-  },
-  {
-    name: 'SEED_USER_2',
-    email: 'user2@example.com',
-    password: '12345678',
-  },
-]
+
+const SEED_USERS = [{
+  email: 'user1@example.com',
+  password: '12345678',
+  res_index: [0, 1, 2]
+},
+{
+  email: 'user2@example.com',
+  password: '12345678',
+  res_index: [3, 4, 5]
+}]
 
 db.once('open', () => {
-  for (let j = 0; j < SEED_USERS.length; j++) {
-    const { name, email, password } = SEED_USERS[j]
-    bcrypt
+  Promise.all(Array.from(SEED_USERS,  seedUser => {
+    return bcrypt
       .genSalt(10)
-      .then((salt) => bcrypt.hash(password, salt))
-      .then((hash) =>
-        User.create({
-          name,
-          email,
-          password: hash,
-        })
-      )
-      .then((user) => {
-        return Promise.all(
-          Array.from({ length: 3 }, (_, i) => {
-            restaurantData[i + j * 3].userId = user._id
-            return Restaurant.create(restaurantData[i + j * 3])
-          })
-        )
+      .then(salt => bcrypt.hash(seedUser.password, salt))
+      .then(hash => User.create({ email: seedUser.email, password: hash }))
+      .then(user => {
+        const userId = user._id
+        const restaurants = Array.from(seedUser.res_index, i => restaurantData[i])
+        restaurants.forEach(restaurant => restaurant.userId = userId)
+        console.log(restaurants)
+        return Restaurant.create(restaurants)
       })
-      .then(() => {
-        console.log(`done with SEED_USER_${j + 1}`)
-        //為什麼這邊用process.exit()會只有五筆餐廳資料
-      })
-  }
+  }))
+    .then(() => {
+      console.log('Done!')
+      process.exit()
+    })
+    .catch(err => console.log(err))
 })
