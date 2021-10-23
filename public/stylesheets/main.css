@@ -3,12 +3,16 @@ header {
 }
 
 .navbar .navbar-brand,
-.create-btn {
+.create-btn,
+.logout-btn,
+.login-btn {
   color: #4592af;
 }
 
 .navbar .navbar-brand:hover,
-.create-btn:hover {
+.create-btn:hover,
+.logout-btn:hover,
+.login-btn:hover {
   color: #226089;
 }
 
