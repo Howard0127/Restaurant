@@ -3,7 +3,9 @@
 ##### A WEB APP COLLECTING POPULAR RESTAURANTS
 
 ## Features
-
+- [x] User can register a account
+- [x] User can login to the account via Facebook or by inputing email and password
+- [x] User can logout from the account 
 - [x] User can view all the restaurant info. cards at the home page
 - [x] User can view all the restaurant info. sorted by order of built, rating or restaurant style.
 - [x] User can crate a new restaurant card
